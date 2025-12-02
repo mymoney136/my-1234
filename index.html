@@ -2,7 +2,12 @@
 <html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="הכסף שלי" />
+    <meta name="theme-color" content="#0f1a2a" />
+    <meta name="msapplication-TileColor" content="#0f1a2a" />
     <title>הכסף שלי — v1.01</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -42,7 +47,18 @@
         }
 
         *{box-sizing:border-box;transition:color .18s,background .18s,border-color .18s,box-shadow .18s,transform .12s}
-        html,body{height:100%;margin:0;font-family:'Rubik','Inter',system-ui,Segoe UI,Roboto,Arial;color:#e9eef6;background:linear-gradient(135deg, #0a1420 0%, #0f1a2a 50%, #081426 100%);background-size:400% 400%;animation:gradientShift 30s ease infinite;-webkit-font-smoothing:antialiased;background-attachment:fixed;position:relative}
+        html,body{height:100%;margin:0;font-family:'Rubik','Inter',system-ui,Segoe UI,Roboto,Arial;color:#e9eef6;background:linear-gradient(135deg, #0a1420 0%, #0f1a2a 50%, #081426 100%);background-size:400% 400%;animation:gradientShift 30s ease infinite;-webkit-font-smoothing:antialiased;background-attachment:fixed;position:relative;width:100%;overflow-x:hidden;overflow-y:auto}
+        
+        body {
+            width: 100%;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        html {
+            width: 100%;
+            overflow-x: hidden;
+        }
         
         body::before {
             content:'';
@@ -59,14 +75,14 @@
         }
 
         /* Layout */
-        .page{min-height:100vh;display:flex;flex-direction:column;position:relative;z-index:2}
-        .topbar{display:flex;justify-content:space-between;align-items:center;padding:14px 22px;gap:16px;background:rgba(7,16,32,0.4);backdrop-filter:blur(12px);border-bottom:1px solid rgba(126,231,199,0.1);animation:floatSlow 12s ease-in-out infinite}
+        .page{display:flex;flex-direction:column;position:relative;z-index:2;width:100%;max-width:100%;overflow-x:hidden;min-height:100vh}
+        .topbar{display:flex;justify-content:space-between;align-items:center;padding:14px 22px;gap:16px;background:rgba(7,16,32,0.4);backdrop-filter:blur(12px);border-bottom:1px solid rgba(126,231,199,0.1);animation:floatSlow 12s ease-in-out infinite;flex-wrap:wrap;flex-shrink:0;width:100%;box-sizing:border-box;position:relative;z-index:10}
 
         /* Glass panel */
         .glass{backdrop-filter:blur(var(--glass-blur));background:linear-gradient(135deg, rgba(255,255,255,calc(0.04 * var(--opacity))), rgba(126,231,199,calc(0.02 * var(--opacity))));border-radius:14px;padding:10px;border:1px solid rgba(126,231,199,calc(0.15 * var(--opacity)));box-shadow:inset 0 1px 0 rgba(255,255,255,calc(0.08 * var(--opacity))), 0 8px 32px rgba(126,231,199,calc(0.08 * var(--opacity)));transition:all .3s cubic-bezier(0.4, 0, 0.2, 1)}
         .glass:hover{border-color:rgba(126,231,199,calc(0.25 * var(--opacity)));box-shadow:inset 0 1px 0 rgba(255,255,255,calc(0.1 * var(--opacity))), 0 12px 40px rgba(126,231,199,calc(0.15 * var(--opacity)))}
         
-        .card{width:100%;max-width:1100px;padding:28px;border-radius:18px;box-shadow:0 25px 50px -12px rgba(2,6,23,0.8),inset 0 1px 0 rgba(255,255,255,0.08);background:linear-gradient(135deg, rgba(255,255,255,calc(0.03 * var(--opacity))), rgba(126,231,199,calc(0.015 * var(--opacity))));border:1px solid rgba(126,231,199,calc(0.12 * var(--opacity)));animation:floatSlow 16s ease-in-out infinite}
+        .card{width:100%;max-width:1100px;padding:28px;border-radius:18px;box-shadow:0 25px 50px -12px rgba(2,6,23,0.8),inset 0 1px 0 rgba(255,255,255,0.08);background:linear-gradient(135deg, rgba(255,255,255,calc(0.03 * var(--opacity))), rgba(126,231,199,calc(0.015 * var(--opacity))));border:1px solid rgba(126,231,199,calc(0.12 * var(--opacity)));animation:floatSlow 16s ease-in-out infinite;box-sizing:border-box}
 
         /* Brand */
         .brand{font-weight:700;color:var(--accent);font-size:1.25rem;letter-spacing:0.4px;animation:floatSlow 8s ease-in-out infinite}
@@ -74,9 +90,10 @@
 
         /* Controls */
         .controls{display:flex;gap:10px;align-items:center}
-        .btn{background:rgba(255,255,255,0.03);border:1px solid rgba(126,231,199,calc(0.08 * var(--opacity)));color:inherit;padding:8px 12px;border-radius:10px;cursor:pointer;backdrop-filter:blur(10px);transition:all .2s;position:relative}
+        .btn{background:rgba(255,255,255,0.03);border:1px solid rgba(126,231,199,calc(0.08 * var(--opacity)));color:inherit;padding:8px 12px;border-radius:10px;cursor:pointer;backdrop-filter:blur(10px);transition:all .2s;position:relative;touch-action:manipulation;user-select:none;-webkit-user-select:none}
         .btn::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at center, rgba(126,231,199,0.1) 0%, transparent 70%);border-radius:10px;opacity:0;transition:opacity .2s}
         .btn:hover::before{opacity:1}
+        .btn:active{transform:scale(0.98)}
         .btn-primary{background:linear-gradient(90deg, rgba(126,231,199,calc(0.16 * var(--opacity))), rgba(125,211,252,calc(0.08 * var(--opacity))));border:1px solid rgba(126,231,199,calc(0.25 * var(--opacity)))}
         .btn:hover{transform:translateY(-2px);border-color:rgba(126,231,199,calc(0.18 * var(--opacity)));box-shadow:0 12px 28px rgba(126,231,199,calc(0.15 * var(--opacity))), inset 0 1px 0 rgba(255,255,255,0.1)}
 
@@ -85,13 +102,13 @@
 
         .banner{margin-top:16px;padding:14px;border-radius:12px;background:linear-gradient(90deg, rgba(126,231,199,calc(0.06 * var(--opacity))), rgba(99,102,241,calc(0.04 * var(--opacity))));border:1px solid rgba(126,231,199,calc(0.15 * var(--opacity)));color:var(--muted);backdrop-filter:blur(10px);animation:pulseGlow 8s ease-in-out infinite}
 
-        .main{flex:1;display:flex;align-items:center;justify-content:center;padding:44px;position:relative;z-index:3}
-        .footer{padding:20px;text-align:center;color:var(--muted);font-size:0.95rem;border-top:1px solid rgba(126,231,199,0.08);background:rgba(7,16,32,0.2)}
+        .main{flex:1;display:flex;align-items:flex-start;justify-content:center;padding:24px 16px;position:relative;z-index:3;overflow-y:visible;width:100%;box-sizing:border-box}
+        .footer{padding:20px;text-align:center;color:var(--muted);font-size:0.95rem;border-top:1px solid rgba(126,231,199,0.08);background:rgba(7,16,32,0.2);flex-shrink:0;width:100%;box-sizing:border-box;position:relative;z-index:5}
 
         /* Modal */
-        .modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(2,6,23,calc(0.65 * var(--opacity)));display:flex;align-items:center;justify-content:center;z-index:1000;opacity:0;pointer-events:none;backdrop-filter:blur(calc(6px * var(--opacity)));transition:all .3s cubic-bezier(0.4, 0, 0.2, 1)}
+        .modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(2,6,23,calc(0.65 * var(--opacity)));display:flex;align-items:center;justify-content:center;z-index:1000;opacity:0;pointer-events:none;backdrop-filter:blur(calc(6px * var(--opacity)));transition:all .3s cubic-bezier(0.4, 0, 0.2, 1);box-sizing:border-box}
         .modal.active{opacity:1;pointer-events:auto}
-        .modal-content{background:linear-gradient(135deg, rgba(255,255,255,calc(0.04 * var(--opacity))), rgba(126,231,199,calc(0.02 * var(--opacity))));border:1px solid rgba(126,231,199,calc(0.15 * var(--opacity)));border-radius:14px;padding:26px;max-width:720px;width:94%;max-height:86vh;overflow:auto;box-shadow:0 25px 50px -12px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.08);transform:translateY(6px) scale(0.95);opacity:0;backdrop-filter:blur(20px);transition:all .3s cubic-bezier(0.4, 0, 0.2, 1)}
+        .modal-content{background:linear-gradient(135deg, rgba(255,255,255,calc(0.04 * var(--opacity))), rgba(126,231,199,calc(0.02 * var(--opacity))));border:1px solid rgba(126,231,199,calc(0.15 * var(--opacity)));border-radius:14px;padding:26px;max-width:720px;width:94%;max-height:86vh;overflow:auto;box-shadow:0 25px 50px -12px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.08);transform:translateY(6px) scale(0.95);opacity:0;backdrop-filter:blur(20px);transition:all .3s cubic-bezier(0.4, 0, 0.2, 1);box-sizing:border-box}
         .modal.active .modal-content{transform:translateY(0) scale(1);opacity:1}
 
         .modal-content h2{margin:0 0 16px 0;color:var(--accent);font-weight:600}
@@ -113,10 +130,7 @@
         .settings-row{margin:12px 0;display:flex;justify-content:space-between;align-items:center;gap:8px}
         .settings-row label{font-size:0.92rem;color:var(--muted)}
 
-        .currency-list{max-height:220px;overflow-y:auto;border:1px solid rgba(126,231,199,calc(0.1 * var(--opacity)));border-radius:8px;padding:8px;background:linear-gradient(135deg, rgba(0,0,0,calc(0.15 * var(--opacity))), rgba(0,0,0,calc(0.08 * var(--opacity))))}
-        .currency-item{padding:8px;margin:6px 0;background:rgba(126,231,199,calc(0.08 * var(--opacity)));border:1px solid rgba(126,231,199,calc(0.16 * var(--opacity)));border-radius:8px;display:flex;justify-content:space-between;align-items:center;transition:all .2s}
-        .currency-item:hover{background:rgba(126,231,199,calc(0.12 * var(--opacity)));box-shadow:0 4px 12px rgba(126,231,199,calc(0.1 * var(--opacity)))}
-        .currency-item button{padding:6px 10px;font-size:0.86rem;border-radius:8px}
+        /* Currency UI removed - simplified to a single default currency (₪) */
 
         .nav-tabs{display:flex;gap:8px;margin-bottom:16px;border-bottom:1px solid rgba(126,231,199,calc(0.1 * var(--opacity)));padding-bottom:8px;overflow-x:auto}
         .nav-tabs button{background:none;border:none;padding:8px 12px;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;white-space:nowrap;transition:all .2s}
@@ -134,9 +148,111 @@
         input[type="range"]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--accent);cursor:pointer;border:none;box-shadow:0 2px 8px rgba(126,231,199,0.4);transition:all .2s}
         input[type="range"]::-moz-range-thumb:hover{transform:scale(1.2);box-shadow:0 4px 16px rgba(126,231,199,0.6)}
 
-        /* small screens */
-        @media (max-width:920px){.main{padding:28px}.settings-container{flex-direction:column}.card{padding:20px}}
-        @media (max-width:520px){.topbar{padding:10px 14px}.brand{font-size:1.05rem}}
+        /* Tablet (medium screens) */
+        @media (max-width: 1024px) {
+            .panel-content {
+                padding: 24px;
+            }
+
+            .budget-step {
+                padding: 20px;
+            }
+
+            .calculations-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .period-selector {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Large phones and small tablets */
+        @media (max-width: 768px) {
+            .panel-header {
+                padding: 16px 20px;
+            }
+
+            .panel-header h2 {
+                font-size: 1.5rem;
+            }
+
+            .panel-content {
+                padding: 16px;
+                padding-bottom: 100px;
+            }
+
+            .budget-step {
+                padding: 16px;
+                margin-bottom: 16px;
+            }
+
+            .step-header {
+                gap: 12px;
+            }
+
+            .step-number {
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
+            }
+
+            .step-title {
+                font-size: 1.1rem;
+            }
+
+            .calculations-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .calc-card {
+                padding: 12px;
+            }
+
+            .period-selector {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .period-btn {
+                padding: 12px 14px;
+                font-size: 0.9rem;
+            }
+
+            .date-range-group {
+                grid-template-columns: 1fr;
+            }
+
+            .panel-actions {
+                grid-template-columns: 1fr;
+                padding: 12px 16px;
+                gap: 12px;
+            }
+
+            .btn-secondary,
+            .btn-primary {
+                padding: 12px;
+                font-size: 0.95rem;
+            }
+
+            .main {
+                padding: 28px;
+            }
+
+            .settings-container {
+                flex-direction: column;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            /* Mobile transaction cards */
+            section[style*="display:grid"] {
+                grid-template-columns: 1fr !important;
+            }
+        }
 
         .dashboard-icons {
             display: flex;
@@ -203,11 +319,12 @@
             display: none;
             top: 60px;
             right: 16px;
+            box-sizing: border-box;
         }
 
         html[dir="rtl"] .settings-popup {
-            right: auto;
-            left: 16px;
+            right: 16px;
+            left: auto;
         }
 
         .settings-popup.active {
@@ -302,32 +419,35 @@
 
         /* Fullscreen Budget Settings Panel */
         .fullscreen-panel {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(7,16,32,0.95), rgba(20,40,80,0.95));
-            backdrop-filter: blur(20px);
-            z-index: 3000;
-            display: none;
-            flex-direction: column;
-            overflow: hidden;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
+            position:fixed;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
+            background:linear-gradient(135deg, rgba(7,16,32,0.95), rgba(20,40,80,0.95));
+            backdrop-filter:blur(20px);
+            z-index:3000;
+            display:none;
+            flex-direction:column;
+            overflow:hidden;
+            pointer-events:none;
+            opacity:0;
+            transition:opacity 0.3s ease, visibility 0.3s ease;
+            box-sizing:border-box;
+            width:100%;
+            height:100%;
         }
 
         .fullscreen-panel.active {
-            display: flex;
-            pointer-events: auto;
-            opacity: 1;
-            visibility: visible;
-            animation: panelSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display:flex;
+            pointer-events:auto;
+            opacity:1;
+            visibility:visible;
+            animation:panelSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .fullscreen-panel.closing {
-            animation: panelSlideOut 0.3s ease-out forwards;
+            animation:panelSlideOut 0.3s ease-out forwards;
         }
 
         @keyframes panelSlideIn {
@@ -862,6 +982,27 @@
             border-color: rgba(126,231,199,0.5);
         }
 
+        /* Light Mode Styling */
+        @media (prefers-color-scheme: light) {
+            body { color: #1a1a1a; }
+            .brand { color: #2d9d78; }
+            h1 { background: linear-gradient(90deg, #1a1a1a, #2d9d78); -webkit-text-fill-color: transparent; }
+            .glass { background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(200,220,220,0.7)); border: 1px solid rgba(45,157,120,0.2); }
+            .glass:hover { border-color: rgba(45,157,120,0.4); box-shadow: 0 12px 40px rgba(45,157,120,0.15); }
+            .topbar { background: rgba(255,255,255,0.8); border-bottom: 1px solid rgba(45,157,120,0.15); }
+            .modal { background: rgba(255,255,255,0.85); }
+            .modal-content { background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(240,245,245,0.9)); }
+            .settings-popup { background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(240,245,245,0.9)); }
+            .add-transaction-modal { background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(240,245,245,0.9)); }
+            input, select, textarea { background: rgba(255,255,255,0.9); border: 1px solid rgba(45,157,120,0.2); color: #1a1a1a; }
+            input:focus, select:focus, textarea:focus { border-color: #2d9d78; box-shadow: 0 0 0 3px rgba(45,157,120,0.15); }
+            .btn { background: rgba(255,255,255,0.7); border: 1px solid rgba(45,157,120,0.2); color: #1a1a1a; }
+            .btn:hover { background: rgba(240,245,245,0.9); border-color: rgba(45,157,120,0.4); }
+            .btn-primary { background: linear-gradient(90deg, rgba(45,157,120,0.2), rgba(45,157,120,0.15)); color: #1a1a1a; }
+            .footer { background: rgba(255,255,255,0.5); border-top: 1px solid rgba(45,157,120,0.15); }
+            .info-box { background: rgba(45,157,120,0.08); border-left-color: rgba(45,157,120,0.5); }
+        }
+
         /* Responsive Design */
         @media (max-width: 1024px) {
             .panel-content {
@@ -990,6 +1131,358 @@
             }
 
             .period-stats {
+                grid-template-columns: 1fr;
+            }
+
+            /* Mobile optimizations */
+            html, body {
+                width: 100%;
+                overflow-x: hidden;
+            }
+
+            .page {
+                min-height: 100vh;
+                width: 100%;
+            }
+
+            .topbar {
+                padding: 10px 12px;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .topbar > div:first-child {
+                flex: 1;
+                min-width: 0;
+            }
+
+            .dashboard-icons {
+                width: 100%;
+                justify-content: space-around;
+                gap: 4px;
+            }
+
+            .icon-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+                flex-shrink: 0;
+            }
+
+            .main {
+                padding: 16px 12px;
+                min-height: calc(100vh - 120px);
+            }
+
+            .card {
+                max-width: 100%;
+                padding: 16px;
+                border-radius: 12px;
+                margin: 0;
+            }
+
+            h1 {
+                font-size: 1.4rem;
+                margin: 0 0 8px 0;
+            }
+
+            p.lead {
+                font-size: 0.9rem;
+            }
+
+            /* Settings popup mobile */
+            .settings-popup {
+                position: fixed;
+                max-width: 90vw;
+                right: 5vw;
+                left: auto;
+                top: 50px;
+                max-height: 70vh;
+                border-radius: 12px;
+            }
+
+            html[dir="rtl"] .settings-popup {
+                right: 5vw;
+                left: auto;
+            }
+
+            /* Transaction cards mobile */
+            section[style*="grid-template-columns:repeat"] {
+                grid-template-columns: 1fr !important;
+            }
+
+            .glass {
+                padding: 14px;
+                border-radius: 10px;
+            }
+
+            /* Modal mobile */
+            .add-transaction-modal {
+                max-width: 95vw;
+                padding: 16px;
+                width: 95vw;
+                max-height: 90vh;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) scale(0.95);
+            }
+
+            .add-transaction-modal.active {
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            .modal-title {
+                font-size: 1.3rem;
+                margin-bottom: 16px;
+            }
+
+            .form-group {
+                margin: 12px 0;
+            }
+
+            .form-group label {
+                font-size: 0.85rem;
+                margin-bottom: 6px;
+            }
+
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                padding: 10px;
+                font-size: 16px;
+            }
+
+            .transaction-type-toggle {
+                gap: 10px;
+                margin: 14px 0;
+            }
+
+            .type-btn {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+
+            .modal-buttons {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                margin-top: 16px;
+            }
+
+            .btn-cancel, .btn-save {
+                padding: 11px;
+                font-size: 0.9rem;
+            }
+
+            /* Floating button mobile */
+            #addTransactionBtn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.3rem;
+                bottom: 16px;
+                right: 16px;
+            }
+
+            /* Transaction list mobile */
+            #txList {
+                max-height: 400px !important;
+                padding: 10px !important;
+            }
+
+            #txList > div {
+                padding: 10px !important;
+                margin-bottom: 8px !important;
+            }
+
+            /* Button improvements for touch */
+            .btn, .add-btn, .btn-primary, .btn-secondary {
+                min-height: 44px;
+                padding: 12px 14px;
+                font-size: 0.95rem;
+                border-radius: 10px;
+            }
+
+            .icon-btn {
+                min-height: 44px;
+                min-width: 44px;
+            }
+
+            /* Input fields - larger for touch */
+            input[type="text"],
+            input[type="email"],
+            input[type="password"],
+            input[type="number"],
+            input[type="date"],
+            select,
+            textarea {
+                min-height: 44px;
+                font-size: 16px;
+                padding: 11px;
+                border-radius: 8px;
+            }
+
+            /* Prevent zoom on input focus */
+            input[type="text"],
+            input[type="email"],
+            input[type="password"],
+            input[type="number"],
+            input[type="date"],
+            select,
+            textarea {
+                font-size: 16px;
+            }
+
+            /* Safe area for notched phones */
+            .topbar {
+                padding-top: max(10px, env(safe-area-inset-top));
+                padding-right: max(12px, env(safe-area-inset-right));
+                padding-left: max(12px, env(safe-area-inset-left));
+            }
+
+            .footer {
+                padding-bottom: max(12px, env(safe-area-inset-bottom));
+            }
+
+            /* Transaction display improvements */
+            .transactionCountBadge {
+                font-size: 0.85rem;
+            }
+
+            /* Ensure text is readable */
+            body {
+                font-size: 14px;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+            }
+
+            h3 {
+                font-size: 1rem;
+            }
+
+            /* Fix overflow on small screens */
+            .page {
+                max-width: 100%;
+                overflow-x: hidden;
+            }
+
+            /* Banner improvements */
+            .banner {
+                padding: 10px;
+                margin: 12px 0;
+                font-size: 0.85rem;
+            }
+
+            /* Collapsible on mobile */
+            .collapsible-header {
+                padding: 12px;
+            }
+
+            .collapsible-title {
+                font-size: 0.95rem;
+            }
+
+            /* Currency styles removed (app uses single currency) */
+
+            /* Info boxes */
+            .info-box {
+                padding: 10px 12px;
+                font-size: 0.85rem;
+                gap: 8px;
+            }
+
+            .info-icon {
+                font-size: 0.9rem;
+                flex-shrink: 0;
+            }
+
+            /* Period selector mobile */
+            .period-btn {
+                padding: 10px;
+                font-size: 0.85rem;
+                white-space: normal;
+            }
+
+            /* Calculation cards mobile */
+            .calc-card {
+                padding: 12px;
+            }
+
+            .calc-icon {
+                font-size: 1.3rem;
+                margin-bottom: 6px;
+            }
+
+            .calc-label {
+                font-size: 0.75rem;
+            }
+
+            .calc-value {
+                font-size: 1.1rem;
+            }
+
+            /* Progress bar mobile */
+            .progress-bar-large {
+                height: 10px;
+                margin: 12px 0 6px 0;
+            }
+
+            .progress-info {
+                font-size: 0.8rem;
+            }
+
+            /* Checkbox improvements */
+            .checkbox-item {
+                padding: 10px;
+            }
+
+            .checkbox-item input[type="checkbox"] {
+                width: 20px;
+                height: 20px;
+                min-width: 20px;
+            }
+
+            .checkbox-label {
+                gap: 4px;
+            }
+
+            .checkbox-label strong {
+                font-size: 0.95rem;
+            }
+
+            .checkbox-description {
+                font-size: 0.8rem;
+            }
+
+            /* Budget panel buttons mobile */
+            .panel-actions {
+                grid-template-columns: 1fr;
+                padding: 12px 16px;
+                gap: 10px;
+            }
+
+            .btn-secondary, .btn-primary {
+                padding: 11px;
+                font-size: 0.9rem;
+            }
+
+            /* Range input mobile */
+            input[type="range"] {
+                height: 8px;
+            }
+
+            input[type="range"]::-webkit-slider-thumb {
+                width: 20px;
+                height: 20px;
+            }
+
+            input[type="range"]::-moz-range-thumb {
+                width: 20px;
+                height: 20px;
+            }
+
+            /* Date range group mobile */
+            .date-range-group {
                 grid-template-columns: 1fr;
             }
         }
@@ -1189,7 +1682,7 @@
         <header class="topbar">
             <div style="display:flex;align-items:center;gap:12px">
                 <div class="glass" style="display:flex;align-items:center;gap:12px;padding:8px 12px">
-                    <div class="brand">תקציב זכוכית</div>
+                    <div class="brand">הכסף שלי</div>
                     <div style="font-size:0.9rem;color:#bfcbd8">v1.01</div>
                 </div>
                 <div class="glass" style="padding:6px 10px"> 
@@ -1225,46 +1718,79 @@
 
             
 
-                <section style="margin-top:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+                <section style="margin-top:18px;display:grid;grid-template-columns:repeat(2,1fr);gap:12px">
                     <div class="glass" style="padding:16px">
-                        <strong>מטבע</strong>
-                        <p id="currencyInfo">עדיין לא הוגדרו מטבעות</p>
+                        <strong>תקציב — סיכום מהיר</strong>
+                        <div id="budgetInfo" style="margin-top:8px;color:var(--muted)">אין נתונים עדיין</div>
+                        <div style="margin-top:10px;display:flex;gap:8px">
+                            <button class="btn" onclick="openBudgetPanel()">נהל תקציב</button>
+                            <button class="btn" onclick="updateAllCalculations()">רענן חישובים</button>
+                        </div>
                     </div>
-                    <div class="glass" style="padding:16px">
-                        <strong>תקציב</strong>
-                        <p id="budgetInfo">אין נתונים עדיין</p>
-                    </div>
+
                     <div class="glass" style="padding:16px">
                         <strong>יעדי חיסכון</strong>
-                        <p id="goalsInfo">אין יעדים עדיין</p>
+                        <div id="goalsInfo" style="margin-top:8px;color:var(--muted)">אין יעדים עדיין</div>
+                        <div style="margin-top:10px;display:flex;gap:8px">
+                            <button class="btn" onclick="openBudgetPanel()">ניהול יעדים</button>
+                        </div>
                     </div>
                 </section>
 
-                <!-- Quick transactions (for testing budget system) -->
-                <section style="margin-top:18px;display:flex;flex-direction:column;gap:8px">
-                    <div class="glass" style="padding:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-                        <select id="txType" style="padding:8px;border-radius:8px">
-                            <option value="expense">הוצאה</option>
-                            <option value="income">הכנסה</option>
-                        </select>
-                        <input type="number" id="txAmount" placeholder="סכום" style="padding:8px;border-radius:8px;width:120px" />
-                        <select id="txCurrency" style="padding:8px;border-radius:8px">
-                            <option value="USD">USD</option>
-                            <option value="ILS">ILS</option>
-                            <option value="EUR">EUR</option>
-                        </select>
-                        <input type="date" id="txDate" style="padding:8px;border-radius:8px" />
-                        <input type="text" id="txCategory" placeholder="קטגוריה (אופציונלי)" style="padding:8px;border-radius:8px;width:160px" />
-                        <input type="text" id="txDesc" placeholder="תאור (אופציונלי)" style="padding:8px;border-radius:8px;flex:1" />
-                        <button id="txAddBtn" type="button" class="btn btn-primary">הוסף</button>
+                <!-- Expense & Income Tracking Section (Large & Beautiful) -->
+                <section style="margin-top:24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+                    <!-- Expense Tracker Card -->
+                    <div class="glass" style="padding:22px;border-radius:16px;background:linear-gradient(135deg, rgba(255,99,99,0.08), rgba(255,99,99,0.02));border:1px solid rgba(255,99,99,0.15)">
+                        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+                            <span style="font-size:1.8rem">💸</span>
+                            <h3 style="margin:0;color:var(--accent);font-size:1.1rem;font-weight:600">הוצאות</h3>
+                        </div>
+                        <div style="background:rgba(255,99,99,0.05);padding:14px;border-radius:12px;margin-bottom:14px;border:1px solid rgba(255,99,99,0.1)">
+                            <p style="margin:0 0 8px 0;color:var(--muted);font-size:0.85rem">סה"כ הוצאות</p>
+                            <p style="margin:0;color:#FF6B6B;font-size:1.6rem;font-weight:700" id="totalExpensesDisplay">0 ₪</p>
+                        </div>
+                        <button class="add-btn" onclick="openAddTransactionModal('expense')" style="background:rgba(255,99,99,0.15);border-color:rgba(255,99,99,0.3)">+ הוסף הוצאה</button>
                     </div>
 
-                    <div id="txList" class="glass" style="padding:12px;max-height:200px;overflow:auto;border-radius:12px"></div>
+                    <!-- Income Tracker Card -->
+                    <div class="glass" style="padding:22px;border-radius:16px;background:linear-gradient(135deg, rgba(72,187,120,0.08), rgba(72,187,120,0.02));border:1px solid rgba(72,187,120,0.15)">
+                        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+                            <span style="font-size:1.8rem">💰</span>
+                            <h3 style="margin:0;color:var(--accent);font-size:1.1rem;font-weight:600">הכנסות</h3>
+                        </div>
+                        <div style="background:rgba(72,187,120,0.05);padding:14px;border-radius:12px;margin-bottom:14px;border:1px solid rgba(72,187,120,0.1)">
+                            <p style="margin:0 0 8px 0;color:var(--muted);font-size:0.85rem">סה"כ הכנסות</p>
+                            <p style="margin:0;color:#48BB78;font-size:1.6rem;font-weight:700" id="totalIncomeDisplay">0 ₪</p>
+                        </div>
+                        <button class="add-btn" onclick="openAddTransactionModal('income')" style="background:rgba(72,187,120,0.15);border-color:rgba(72,187,120,0.3)">+ הוסף הכנסה</button>
+                    </div>
+
+                    <!-- Net Balance Card -->
+                    <div class="glass" style="padding:22px;border-radius:16px;background:linear-gradient(135deg, rgba(126,231,199,0.08), rgba(126,231,199,0.02));border:1px solid rgba(126,231,199,0.15)">
+                        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+                            <span style="font-size:1.8rem">📊</span>
+                            <h3 style="margin:0;color:var(--accent);font-size:1.1rem;font-weight:600">יתרה נטו</h3>
+                        </div>
+                        <div style="background:rgba(126,231,199,0.05);padding:14px;border-radius:12px;border:1px solid rgba(126,231,199,0.1)">
+                            <p style="margin:0 0 8px 0;color:var(--muted);font-size:0.85rem">הכנסות - הוצאות</p>
+                            <p style="margin:0;color:var(--accent);font-size:1.6rem;font-weight:700" id="netBalanceDisplay">0 ₪</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Recent Transactions List (Large & Clear) -->
+                <section style="margin-top:24px">
+                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+                        <span style="font-size:1.5rem">📝</span>
+                        <h2 style="margin:0;color:var(--accent);font-size:1.2rem;font-weight:600">עסקאות אחרונות</h2>
+                        <span style="color:var(--muted);font-size:0.9rem" id="transactionCountBadge">(0)</span>
+                    </div>
+                    <div id="txList" class="glass" style="padding:14px;border-radius:12px;max-height:320px;overflow-y:auto;min-height:60px"></div>
                 </section>
             </div>
         </main>
 
-        <footer class="footer">כל הזכויות שמורות ©2025 קרדיט לסלים</footer>
+        <footer class="footer">All Winnings Reserved 2025 Built by Ido Credit to the Baskets</footer>
     </div>
 
     <!-- Auth Modal -->
@@ -1643,16 +2169,7 @@
             <input type="checkbox" id="enableNotif" checked onchange="toggleNotifications()" />
             <label>הפעל התראות</label>
         </div>
-        <div class="popup-item">
-            <label>מטבע ראשי</label>
-            <select id="primaryCurrency" onchange="setPrimaryCurrency()">
-                <option value="USD">USD - דולר</option>
-                <option value="EUR">EUR - יורו</option>
-                <option value="GBP">GBP - פאונד</option>
-                <option value="ILS">ILS - שקל</option>
-                <option value="JPY">JPY - יין</option>
-            </select>
-        </div>
+        <!-- Primary currency selection removed (app now uses a single default currency symbol) -->
     </div>
 
     <!-- Tips Popup -->
@@ -1692,7 +2209,7 @@
     <script>
         const translations = {
             he: {
-                brand: 'תקציב זכוכית',
+                brand: 'הכסף שלי',
                 prototype: 'v1.01',
                 login: 'כניסה',
                 signInUp: 'הרשמה / כניסה',
@@ -1702,7 +2219,7 @@
                 tipsOn: 'טיפים: פעיל',
                 tipsOff: 'טיפים: כבוי',
                 notifications: 'הודעות',
-                welcome: 'ברוכים הבאים ל־תקציב זכוכית',
+                welcome: 'ברוכים הבאים ל־הכסף שלי',
                 intro: 'אב טיפוס אלגנטי של מנהל תקציב עם סגנון זכוכית. דף זה מוגש על ידי שרת Python מקומי.',
                 loading: 'טוען הגדרות…',
                 currency: 'מטבע',
@@ -1711,7 +2228,7 @@
                 noData: 'אין נתונים עדיין',
                 savingsGoals: 'יעדי חיסכון',
                 noGoals: 'אין יעדים עדיין',
-                footer: 'כל הזכויות שמורות © 2025',
+                footer: 'All Winnings Reserved 2025 Built by Ido Credit to the Baskets',
                 configNotSet: 'מפתחות Supabase לא הוגדרו. הוסיפו מפתחות לקובץ <code>.env</code> המקומי. ראו README לוהוראות.',
                 configDetected: 'הגדרות Supabase זוהו. מוכן להשתלבות (מפתחות מוסתרים).',
                 configError: 'כישלון בטעינת נקודת ה־config: ',
@@ -1731,7 +2248,7 @@
                 tips_label: 'טיפים'
             },
             en: {
-                brand: 'GlassBudget',
+                brand: 'My Money',
                 prototype: 'v1.01',
                 login: 'Login',
                 signInUp: 'Sign in / Sign up',
@@ -1741,8 +2258,8 @@
                 tipsOn: 'Tips: On',
                 tipsOff: 'Tips: Off',
                 notifications: 'Notifications',
-                welcome: 'Welcome to GlassBudget',
-                intro: 'A clean glass-morphism budgeting prototype. This page is a frontend skeleton served by a local Python server.',
+                welcome: 'Welcome to My Money',
+                intro: 'A clean budgeting prototype. This page is a frontend skeleton served by a local Python server.',
                 loading: 'Loading configuration…',
                 currency: 'Currency',
                 noCurrencies: 'No currencies configured yet',
@@ -1750,7 +2267,7 @@
                 noData: 'No data yet',
                 savingsGoals: 'Savings Goals',
                 noGoals: 'No goals yet',
-                footer: 'All rights reserved © 2025',
+                footer: 'All Winnings Reserved 2025 Built by Ido Credit to the Baskets',
                 configNotSet: 'Supabase keys are not configured. Add keys to the local <code>.env</code>. See README for instructions.',
                 configDetected: 'Supabase configuration detected. Ready to integrate (keys not shown).',
                 configError: 'Failed to load config endpoint: ',
@@ -1770,7 +2287,7 @@
                 tips_label: 'Tips'
             },
             ar: {
-                brand: 'محفظة الزجاج',
+                brand: 'My Money',
                 prototype: 'v1.01',
                 login: 'تسجيل الدخول',
                 signInUp: 'تسجيل / دخول',
@@ -1780,8 +2297,8 @@
                 tipsOn: 'نصائح: مفعل',
                 tipsOff: 'نصائح: معطل',
                 notifications: 'إخطارات',
-                welcome: 'مرحبا بك في محفظة الزجاج',
-                intro: 'نموذج أولي أنيق للميزانية بنمط زجاجي. يتم توفير هذه الصفحة بواسطة خادم Python محلي.',
+                welcome: 'Welcome to My Money',
+                intro: 'A clean budgeting prototype. This page is a frontend skeleton served by a local Python server.',
                 loading: 'جاري تحميل التكوين...',
                 currency: 'العملة',
                 noCurrencies: 'لم يتم تكوين عملات حتى الآن',
@@ -1789,7 +2306,7 @@
                 noData: 'لا توجد بيانات حتى الآن',
                 savingsGoals: 'أهداف التوفير',
                 noGoals: 'لا توجد أهداف حتى الآن',
-                footer: 'جميع الحقوق محفوظة © 2025',
+                footer: 'All Winnings Reserved 2025 Built by Ido Credit to the Baskets',
                 configNotSet: 'لم يتم تكوين مفاتيح Supabase. أضف المفاتيح إلى ملف <code>.env</code> المحلي. انظر README للحصول على التعليمات.',
                 configDetected: 'تم الكشف عن تكوين Supabase. جاهز للتكامل (المفاتيح غير معروضة).',
                 configError: 'فشل في تحميل نقطة نهاية التكوين: ',
@@ -1809,7 +2326,7 @@
                 tips_label: 'نصائح'
             },
             ru: {
-                brand: 'Стеклянный Бюджет',
+                brand: 'My Money',
                 prototype: 'v1.01',
                 login: 'Вход',
                 signInUp: 'Регистрация / Вход',
@@ -1819,8 +2336,8 @@
                 tipsOn: 'Советы: Включено',
                 tipsOff: 'Советы: Отключено',
                 notifications: 'Уведомления',
-                welcome: 'Добро пожаловать в Стеклянный Бюджет',
-                intro: 'Элегантный прототип бюджета в стиле стекломорфизма. Эта страница обслуживается локальным сервером Python.',
+                welcome: 'Welcome to My Money',
+                intro: 'A clean budgeting prototype. This page is a frontend skeleton served by a local Python server.',
                 loading: 'Загрузка конфигурации…',
                 currency: 'Валюта',
                 noCurrencies: 'Валюты еще не настроены',
@@ -1828,7 +2345,7 @@
                 noData: 'Пока нет данных',
                 savingsGoals: 'Цели Сбережений',
                 noGoals: 'Пока нет целей',
-                footer: 'Все права защищены © 2025',
+                footer: 'All Winnings Reserved 2025 Built by Ido Credit to the Baskets',
                 configNotSet: 'Ключи Supabase не настроены. Добавьте ключи в локальный файл <code>.env</code>. См. README для инструкций.',
                 configDetected: 'Конфигурация Supabase обнаружена. Готово к интеграции (ключи не показаны).',
                 configError: 'Ошибка загрузки конечной точки config: ',
@@ -1858,7 +2375,7 @@
             contrastIntensity: 1,
             glassOpacity: 1,
             currencies: [],
-            primaryCurrency: 'USD',
+            primaryCurrency: 'ILS',
             enableTips: true,
             tipsDuration: 25,
             tipsEnabled: true,
@@ -1899,20 +2416,17 @@
             document.querySelector('h1').textContent = t.welcome;
             document.querySelector('p.lead').textContent = t.intro;
             document.querySelector('#configBanner').textContent = t.loading;
-            document.querySelectorAll('.glass strong')[0].textContent = t.currency;
-            document.querySelectorAll('.glass strong')[1].textContent = t.budget;
-            document.querySelectorAll('.glass strong')[2].textContent = t.savingsGoals;
-            document.querySelectorAll('p#currencyInfo')[0].textContent = t.noCurrencies;
-            document.querySelectorAll('p#budgetInfo')[0].textContent = t.noData;
-            document.querySelectorAll('p#goalsInfo')[0].textContent = t.noGoals;
+            // Update budget and goals info texts if present
+            const budgetInfoEl = document.getElementById('budgetInfo'); if (budgetInfoEl) budgetInfoEl.textContent = t.noData;
+            const goalsInfoEl = document.getElementById('goalsInfo'); if (goalsInfoEl) goalsInfoEl.textContent = t.noGoals;
             document.querySelector('.footer').textContent = t.footer;
             
             // Update document title
             const titleMap = {
-                he: 'תקציב זכוכית — v1.01',
-                en: 'Glass Budget — v1.01',
-                ar: 'محفظة الزجاج — v1.01',
-                ru: 'Стеклянный Бюджет — v1.01'
+                he: 'הכסף שלי — v1.01',
+                en: 'My Money — v1.01',
+                ar: 'My Money — v1.01',
+                ru: 'My Money — v1.01'
             };
             document.title = titleMap[lang] || 'Glass Budget — v1.01';
             
@@ -2244,7 +2758,7 @@
         }
 
         function updateCalculationsDisplay(dailyAllowance, weeklyAllowance, totalSpent, remainingBalance) {
-            const currencySymbol = userSettings.primaryCurrency === 'USD' ? '$' : '₪';
+            const currencySymbol = '₪';
             
             // Daily allowance
             const dailyEl = document.getElementById('calcDaily');
@@ -2448,13 +2962,28 @@
         // Add Transaction Modal Functions
         let currentTransactionType = 'expense';
 
-        function openAddTransactionModal() {
+        function openAddTransactionModal(type = 'expense') {
             const modal = document.getElementById('add-transaction-modal');
             if (modal) {
+                currentTransactionType = type;
                 modal.classList.add('active');
                 // Set today's date as default
                 const today = new Date().toISOString().split('T')[0];
                 document.getElementById('txDate').value = today;
+                
+                // Set transaction type buttons
+                const expenseBtn = document.getElementById('typeExpense');
+                const incomeBtn = document.getElementById('typeIncome');
+                if (expenseBtn && incomeBtn) {
+                    expenseBtn.classList.toggle('active', type === 'expense');
+                    incomeBtn.classList.toggle('active', type === 'income');
+                }
+                
+                // Focus on title input
+                setTimeout(() => {
+                    const titleInput = document.getElementById('txTitle');
+                    if (titleInput) titleInput.focus();
+                }, 100);
             }
         }
 
@@ -2467,6 +2996,8 @@
             document.getElementById('txTitle').value = '';
             document.getElementById('txAmount').value = '';
             document.getElementById('txNote').value = '';
+            document.getElementById('txDate').value = '';
+            document.getElementById('txCategory').value = 'food';
         }
 
         function setTransactionType(type) {
@@ -2483,7 +3014,12 @@
             const note = document.getElementById('txNote').value.trim();
             
             if (!title || !amount || !date) {
-                alert('יש למלא את כל השדות');
+                alert('יש למלא את כל השדות הנדרשים: כותרת, סכום, ותאריך');
+                return;
+            }
+            
+            if (amount <= 0) {
+                alert('הסכום חייב להיות גדול מאפס');
                 return;
             }
             
@@ -2499,18 +3035,21 @@
                 amount,
                 date,
                 note,
+                currency: 'ILS',
                 createdAt: new Date().toISOString()
             };
             
-            userSettings.transactions.push(transaction);
+            userSettings.transactions.unshift(transaction);
             localStorage.setItem('userSettings', JSON.stringify(userSettings));
             
             closeAddTransactionModal();
-            updateBudgetStats();
+            updateBudgetDisplay();
+            updateExpenseIncomeDisplay();
+            renderTransactionList();
             
             // Show success message
-            const msg = currentTransactionType === 'expense' ? 'הוצאה נוספה בהצלחה' : 'הכנסה נוספה בהצלחה';
-            alert(msg);
+            const typeLabel = currentTransactionType === 'expense' ? 'הוצאה' : 'הכנסה';
+            showTip(`${typeLabel} נוספה בהצלחה! ✓ ${title}`);
         }
 
         function openPopup(popupId) {
@@ -2594,19 +3133,58 @@
         }
 
         function applyTheme(theme) {
+            const root = document.documentElement;
             const page = document.querySelector('.page');
+            const body = document.body;
+            
             page.style.background = '';
             page.style.backgroundAttachment = '';
+            body.style.background = '';
+            body.style.color = '';
+            
             if (theme === 'light') {
-                page.style.background = 'linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%)';
+                // Light mode colors
+                root.style.setProperty('--glass-bg', 'rgba(255,255,255,0.8)');
+                root.style.setProperty('--glass-border', 'rgba(200,200,200,0.4)');
+                root.style.setProperty('--accent', '#2d9d78');
+                root.style.setProperty('--muted', '#5a5a5a');
+                
+                page.style.background = 'linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%)';
+                body.style.background = 'linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%)';
+                body.style.color = '#1a1a1a';
                 document.documentElement.style.colorScheme = 'light';
+                
+                // Update text colors for light mode
+                document.documentElement.style.setProperty('--text-color', '#1a1a1a');
+                document.documentElement.style.setProperty('--secondary-text', '#5a5a5a');
             } else if (theme === 'dark') {
-                page.style.background = 'linear-gradient(135deg, #0f172a 0%, #0b1220 100%)';
+                // Dark mode colors
+                root.style.setProperty('--glass-bg', 'rgba(255,255,255,0.06)');
+                root.style.setProperty('--glass-border', 'rgba(255,255,255,0.12)');
+                root.style.setProperty('--accent', '#7EE7C7');
+                root.style.setProperty('--muted', '#9AA4B2');
+                
+                page.style.background = 'linear-gradient(135deg, #0a1420 0%, #0f1a2a 50%, #081426 100%)';
+                body.style.background = 'linear-gradient(135deg, #0a1420 0%, #0f1a2a 50%, #081426 100%)';
+                body.style.color = '#e9eef6';
                 document.documentElement.style.colorScheme = 'dark';
+                
+                // Update text colors for dark mode
+                document.documentElement.style.setProperty('--text-color', '#e9eef6');
+                document.documentElement.style.setProperty('--secondary-text', '#9AA4B2');
             } else if (theme === 'transparent') {
+                // Transparent mode
+                root.style.setProperty('--glass-bg', 'rgba(255,255,255,0.06)');
+                root.style.setProperty('--glass-border', 'rgba(255,255,255,0.12)');
+                root.style.setProperty('--accent', '#7EE7C7');
+                root.style.setProperty('--muted', '#9AA4B2');
+                
                 page.style.background = 'rgba(15, 23, 42, 0.5)';
                 page.style.backgroundAttachment = 'fixed';
+                body.style.background = 'rgba(15, 23, 42, 0.5)';
+                body.style.color = '#e9eef6';
             }
+            
             if (userSettings.background) {
                 if (userSettings.background.startsWith('http')) {
                     page.style.backgroundImage = `url('${userSettings.background}')`;
@@ -2614,8 +3192,15 @@
                     page.style.backgroundPosition = 'center';
                 }
             }
+            
             // Apply opacity to CSS variables
             document.documentElement.style.setProperty('--opacity', userSettings.glassOpacity || 1);
+            
+            // Force re-render of all glass elements
+            document.querySelectorAll('.glass, .card, .modal-content').forEach(el => {
+                el.style.background = '';
+                el.style.border = '';
+            });
         }
 
         function handleBgUpload() {
@@ -2669,7 +3254,7 @@
             const el_glassOpacity = document.getElementById('glassOpacity'); if (el_glassOpacity) el_glassOpacity.value = userSettings.glassOpacity || 1;
             const el_opacityValue = document.getElementById('opacityValue'); if (el_opacityValue) el_opacityValue.textContent = Math.round((userSettings.glassOpacity || 1) * 100) + '%';
             document.documentElement.style.setProperty('--opacity', userSettings.glassOpacity || 1);
-            const el_primaryCurrency = document.getElementById('primaryCurrency'); if (el_primaryCurrency) el_primaryCurrency.value = userSettings.primaryCurrency;
+            // primary currency selector removed
             const el_totalBudget = document.getElementById('totalBudget'); if (el_totalBudget) el_totalBudget.value = userSettings.totalBudget;
             const el_budgetPeriod = document.getElementById('budgetPeriod'); if (el_budgetPeriod) el_budgetPeriod.value = userSettings.budgetPeriod;
             const el_budgetStartDate = document.getElementById('budgetStartDate'); if (el_budgetStartDate) el_budgetStartDate.value = userSettings.budgetStartDate || '';
@@ -2691,12 +3276,13 @@
             // update top-right label and start/stop tips based on setting
             updateTipsToggleLabel();
             if (userSettings.tipsEnabled) startTipsLoop(); else stopTipsLoop();
-            renderCurrencyList2();
+            // currency list removed
             renderNotificationHistory();
             renderTipList();
             // update budget display and transaction list
             renderTransactionList();
             updateBudgetDisplay();
+            updateExpenseIncomeDisplay();
         }
 
         function changeLanguageSetting() {
@@ -2705,43 +3291,7 @@
             document.getElementById('langSel').value = lang;
         }
 
-        function setPrimaryCurrency() {
-            const curr = document.getElementById('primaryCurrency').value;
-            userSettings.primaryCurrency = curr;
-            saveSettings();
-        }
-
-        function addCurrency2() {
-            const select = document.getElementById('currencySelect2');
-            const currency = select.value;
-            if (!currency || userSettings.currencies.includes(currency)) {
-                return;
-            }
-            userSettings.currencies.push(currency);
-            saveSettings();
-            renderCurrencyList2();
-            select.value = '';
-        }
-
-        function removeCurrency2(curr) {
-            userSettings.currencies = userSettings.currencies.filter(c => c !== curr);
-            saveSettings();
-            renderCurrencyList2();
-        }
-
-        function renderCurrencyList2() {
-            const list = document.getElementById('currencyList2');
-            if (userSettings.currencies.length === 0) {
-                list.innerHTML = '<p style="color:#aaa">אין</p>';
-            } else {
-                list.innerHTML = userSettings.currencies.map(curr => `
-                    <div class="currency-item">
-                        <span>${curr}</span>
-                        <button onclick="removeCurrency2('${curr}')">הסר</button>
-                    </div>
-                `).join('');
-            }
-        }
+        // Currency management removed: app uses a single default currency symbol (₪)
 
         function saveBudgetSettings() {
             userSettings.totalBudget = parseFloat(document.getElementById('totalBudget').value) || 0;
@@ -2770,7 +3320,7 @@
 
         function sendTestNotification() {
             const now = new Date().toLocaleString();
-            const msg = { time: now, text: 'זו הודעת בדיקה מ־תקציב זכוכית' };
+            const msg = { time: now, text: 'זו הודעת בדיקה מ־הכסף שלי' };
             userSettings.notificationHistory.unshift(msg);
             if (userSettings.notificationHistory.length > 10) {
                 userSettings.notificationHistory.pop();
@@ -2809,7 +3359,7 @@
             const category = tx.category || '';
             userSettings.transactions.unshift({
                 amount: parseFloat(tx.amount),
-                currency: tx.currency || userSettings.primaryCurrency || 'USD',
+                currency: tx.currency || 'ILS',
                 date: tx.date || new Date().toISOString().slice(0,10),
                 desc: tx.desc || '',
                 type,
@@ -2842,7 +3392,7 @@
                 const tx = {
                     amount: Math.abs(amt),
                     type: _elValue('txType', 'expense') || 'expense',
-                    currency: _elValue('txCurrency', userSettings.primaryCurrency || 'USD'),
+                    currency: _elValue('txCurrency', 'ILS'),
                     date: _elValue('txDate', new Date().toISOString().slice(0,10)),
                     category: _elValue('txCategory', ''),
                     desc: _elValue('txDesc', '')
@@ -2868,24 +3418,48 @@
             saveSettings();
             renderTransactionList();
             updateBudgetDisplay();
+            updateExpenseIncomeDisplay();
         }
 
         function renderTransactionList(){
             const el = document.getElementById('txList');
+            const countBadge = document.getElementById('transactionCountBadge');
+            
             if (!el) return;
-            if (!userSettings.transactions || userSettings.transactions.length === 0) {
-                el.innerHTML = '<p style="color:#aaa">אין הוצאות עדיין</p>';
+            
+            const transactions = userSettings.transactions || [];
+            if (countBadge) {
+                countBadge.textContent = `(${transactions.length})`;
+            }
+            
+            if (transactions.length === 0) {
+                el.innerHTML = '<p style="color:var(--muted);text-align:center;padding:20px">אין עסקאות עדיין</p>';
                 return;
             }
-            el.innerHTML = userSettings.transactions.map((t, i) => {
+            
+            // Show last 10 transactions
+            const recentTxs = transactions.slice(0, 10);
+            const currencySymbol = '₪';
+            el.innerHTML = recentTxs.map((t, i) => {
                 const isIncome = (t.type === 'income');
-                const color = isIncome ? 'rgba(72,187,120,0.12)' : 'rgba(255,99,99,0.06)';
-                const badge = isIncome ? 'הכנסה' : 'הוצאה';
-                const sign = isIncome ? '+' : '-';
+                const color = isIncome ? 'rgba(72,187,120,0.1)' : 'rgba(255,99,99,0.1)';
+                const borderColor = isIncome ? 'rgba(72,187,120,0.2)' : 'rgba(255,99,99,0.2)';
+                const textColor = isIncome ? '#48BB78' : '#FF6B6B';
+                const sign = isIncome ? '+' : '−';
+                const categoryTag = t.category ? `<span style="font-size:0.8rem;color:var(--muted);margin-left:8px">[${t.category}]</span>` : '';
+                
                 return `
-                <div style="display:flex;justify-content:space-between;align-items:center;padding:8px;border-bottom:1px solid rgba(255,255,255,0.03);background:${color};">
-                    <div style="font-size:0.95rem">${t.date} — ${sign}${t.amount.toFixed(2)} ${t.currency} <div style='font-size:0.85rem;color:#aaa'>${t.category ? '['+t.category+'] ' : ''}${t.desc || ''}</div></div>
-                    <div><button class="btn" onclick="removeTransactionAt(${i})">הסר</button></div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:10px;border:1px solid ${borderColor};background:${color};margin-bottom:8px;transition:all .2s">
+                    <div style="flex:1">
+                        <div style="display:flex;align-items:center;gap:8px">
+                            <span style="font-weight:700;color:${textColor};font-size:1rem">${sign}${t.amount.toFixed(2)}</span>
+                            <span style="color:var(--muted);font-size:0.9rem">${currencySymbol}</span>
+                            ${categoryTag}
+                        </div>
+                        <div style="color:var(--muted);font-size:0.85rem;margin-top:4px">${t.title || 'ללא כותרת'} • ${t.date}</div>
+                        ${t.note ? `<div style="color:var(--muted);font-size:0.8rem;margin-top:3px;font-style:italic">${t.note}</div>` : ''}
+                    </div>
+                    <button class="btn" onclick="removeTransactionAt(${transactions.indexOf(t)})" style="padding:6px 10px;font-size:0.85rem;background:rgba(255,107,107,0.15);border-color:rgba(255,107,107,0.3);color:#FF6B6B;margin-right:8px">הסר</button>
                 </div>
             `; }).join('');
         }
@@ -2923,22 +3497,62 @@
         function updateBudgetDisplay(){
             const summary = computeBudgetSummary();
             const budgetInfo = document.getElementById('budgetInfo');
-            const currency = userSettings.primaryCurrency || 'USD';
+            const currencySymbol = '₪';
             if (budgetInfo) {
                 budgetInfo.innerHTML = `
-                    <div style="font-size:0.95rem">סה"כ תקציב: <strong>${summary.totalBudget.toFixed(2)} ${currency}</strong></div>
-                    <div style="font-size:0.95rem;color:rgba(255,99,99,0.9)">סה"כ הוצאות: <strong>${summary.expenses.toFixed(2)} ${currency}</strong></div>
-                    <div style="font-size:0.95rem;color:rgba(72,187,120,0.95)">סה"כ הכנסות: <strong>${summary.income.toFixed(2)} ${currency}</strong></div>
-                    <div style="font-size:0.95rem">יתרת תקופה (הכנסות - הוצאות): <strong>${summary.net.toFixed(2)} ${currency}</strong></div>
-                    <div style="font-size:0.95rem">שמורה בסוף: <strong>${summary.reserve.toFixed(2)} ${currency}</strong></div>
-                    <div style="font-size:0.95rem">נשאר לתקציב: <strong>${summary.remaining.toFixed(2)} ${currency}</strong></div>
+                    <div style="font-size:0.95rem">סה"כ תקציב: <strong>${summary.totalBudget.toFixed(2)} ${currencySymbol}</strong></div>
+                    <div style="font-size:0.95rem;color:rgba(255,99,99,0.9)">סה"כ הוצאות: <strong>${summary.expenses.toFixed(2)} ${currencySymbol}</strong></div>
+                    <div style="font-size:0.95rem;color:rgba(72,187,120,0.95)">סה"כ הכנסות: <strong>${summary.income.toFixed(2)} ${currencySymbol}</strong></div>
+                    <div style="font-size:0.95rem">יתרת תקופה (הכנסות - הוצאות): <strong>${summary.net.toFixed(2)} ${currencySymbol}</strong></div>
+                    <div style="font-size:0.95rem">שמורה בסוף: <strong>${summary.reserve.toFixed(2)} ${currencySymbol}</strong></div>
+                    <div style="font-size:0.95rem">נשאר לתקציב: <strong>${summary.remaining.toFixed(2)} ${currencySymbol}</strong></div>
                     <div style="font-size:0.95rem">ימים נותרו: <strong>${summary.remDays}</strong></div>
-                    <div style="font-size:0.95rem">אשראי יומי מומלץ: <strong>${summary.dailyAllowance.toFixed(2)} ${currency}</strong></div>
+                    <div style="font-size:0.95rem">אשראי יומי מומלץ: <strong>${summary.dailyAllowance.toFixed(2)} ${currencySymbol}</strong></div>
                 `;
             }
             const goalsInfo = document.getElementById('goalsInfo');
             if (goalsInfo) {
-                goalsInfo.innerHTML = `יעד חיסכון: <strong>${(userSettings.savingsAmount || 0).toFixed(2)} ${currency}</strong> — ${userSettings.savingsDesc || '-'} ${userSettings.savingsDeadline ? 'עד ' + userSettings.savingsDeadline : ''}`;
+                goalsInfo.innerHTML = `יעד חיסכון: <strong>${(userSettings.savingsAmount || 0).toFixed(2)} ${currencySymbol}</strong> — ${userSettings.savingsDesc || '-'} ${userSettings.savingsDeadline ? 'עד ' + userSettings.savingsDeadline : ''}`;
+            }
+            
+            // Update expense/income totals on home screen
+            updateExpenseIncomeDisplay();
+        }
+
+        function updateExpenseIncomeDisplay() {
+            const currencySymbol = '₪';
+            
+            let totalExpenses = 0;
+            let totalIncome = 0;
+            
+            (userSettings.transactions || []).forEach(t => {
+                if (t.type === 'expense') {
+                    totalExpenses += parseFloat(t.amount) || 0;
+                } else if (t.type === 'income') {
+                    totalIncome += parseFloat(t.amount) || 0;
+                }
+            });
+            
+            const netBalance = totalIncome - totalExpenses;
+            
+            // Update displays
+            const expenseDisplay = document.getElementById('totalExpensesDisplay');
+            const incomeDisplay = document.getElementById('totalIncomeDisplay');
+            const netDisplay = document.getElementById('netBalanceDisplay');
+            
+            if (expenseDisplay) expenseDisplay.textContent = totalExpenses.toFixed(2) + ' ' + currencySymbol;
+            if (incomeDisplay) incomeDisplay.textContent = totalIncome.toFixed(2) + ' ' + currencySymbol;
+            
+            if (netDisplay) {
+                netDisplay.textContent = netBalance.toFixed(2) + ' ' + currencySymbol;
+                // Change color based on positive/negative
+                if (netBalance < 0) {
+                    netDisplay.style.color = '#FF6B6B';
+                } else if (netBalance > 0) {
+                    netDisplay.style.color = '#48BB78';
+                } else {
+                    netDisplay.style.color = 'var(--accent)';
+                }
             }
         }
 
@@ -3094,6 +3708,43 @@
                     { id: 'es-g2', author: 'user', text: 'Activa notificaciones para recordatorios diarios.' }
                 ]
             }
+            ,
+            ar: {
+                budget: [
+                    { id: 'ar-b1', author: 'site', text: 'حدد مبلغًا يوميًا صغيرًا — الاتساق مهم.' },
+                    { id: 'ar-b2', author: 'user', text: 'تحقق من النفقات الصغيرة — تتراكم بسرعة.' }
+                ],
+                savings: [
+                    { id: 'ar-s1', author: 'site', text: 'حدد هدف ادخار شهري متواضع وقم بأتمتته.' },
+                    { id: 'ar-s2', author: 'user', text: 'قم بأتمتة التحويلات لتنمية المدخرات دون تفكير.' }
+                ],
+                management: [
+                    { id: 'ar-m1', author: 'user', text: 'تتبع فئات الإنفاق لتحديد الأولويات بشكل أفضل.' },
+                    { id: 'ar-m2', author: 'user', text: 'أنشئ قواعد ادخار بسيطة مثل "5% من الدخل".' }
+                ],
+                general: [
+                    { id: 'ar-g1', author: 'site', text: 'قم بتسجيل الدخول للمزامنة بين الأجهزة (موصى به).' },
+                    { id: 'ar-g2', author: 'user', text: 'قم بتمكين الإشعارات للتذكيرات اليومية.' }
+                ]
+            },
+            ru: {
+                budget: [
+                    { id: 'ru-b1', author: 'site', text: 'Установите небольшую ежедневную сумму — постоянство важно.' },
+                    { id: 'ru-b2', author: 'user', text: 'Проверяйте мелкие расходы — они быстро накапливаются.' }
+                ],
+                savings: [
+                    { id: 'ru-s1', author: 'site', text: 'Установите скромную месячную цель сбережений и автоматизируйте её.' },
+                    { id: 'ru-s2', author: 'user', text: 'Автоматизируйте переводы, чтобы копить без лишних действий.' }
+                ],
+                management: [
+                    { id: 'ru-m1', author: 'user', text: 'Отслеживайте категории расходов, чтобы лучше приоритизировать.' },
+                    { id: 'ru-m2', author: 'user', text: 'Создайте простые правила сбережений, например "5% от дохода".' }
+                ],
+                general: [
+                    { id: 'ru-g1', author: 'site', text: 'Войдите, чтобы синхронизировать данные между устройствами (рекомендуется).' },
+                    { id: 'ru-g2', author: 'user', text: 'Включите уведомления для ежедневных напоминаний.' }
+                ]
+            }
         };
 
         function getTipsForCurrentLang() {
@@ -3188,7 +3839,24 @@
 
         // Initialize application state, load settings/auth and attach event listeners
         function init() {
-            // load saved language and auth
+            // Prevent unwanted zoom on input focus (mobile)
+            document.addEventListener('touchmove', function(e) {
+                if (e.target.closest('input') || e.target.closest('select') || e.target.closest('textarea')) {
+                    return; // Allow scrolling in inputs
+                }
+            }, { passive: true });
+
+            // Prevent double-tap zoom
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', function(e) {
+                const now = Date.now();
+                if (now - lastTouchEnd <= 300) {
+                    e.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, false);
+
+            // Load saved language and auth
             const savedLang = localStorage.getItem('selectedLanguage') || currentLang;
             const savedAuth = localStorage.getItem('authState');
             if (savedAuth) {
@@ -3264,10 +3932,7 @@
             const tipsToggleEl = document.getElementById('tipsToggle');
             if (tipsToggleEl) tipsToggleEl.addEventListener('click', () => { setTipsEnabled(!userSettings.tipsEnabled); });
 
-            // Attach add-transaction button handler (defensive)
-            const txAddBtn = document.getElementById('txAddBtn');
-            if (txAddBtn) txAddBtn.addEventListener('click', addTransactionFromUI);
-            renderCurrencyList2();
+            // currency UI removed
             renderNotificationHistory();
             renderTipList();
             // loadConfig() - disabled for offline-first mode
